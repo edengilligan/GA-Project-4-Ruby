@@ -1,4 +1,4 @@
-class TimesheetsController < ApplicationController
+class Api::TimesheetsController < ApplicationController
     # index is just a get request /timesheets
     def index 
         render json: Timesheets.all

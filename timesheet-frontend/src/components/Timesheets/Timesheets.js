@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Timesheets = () => {
     const [timesheets, setTimesheets] = useState([])
     useEffect(() => {
-fetch('/timesheets').then(response => response.json()).then(data => setTimesheets(data))
+fetch('/api/timesheets').then(response => response.json()).then(data => setTimesheets(data))
     },[])
     return <div>
         <h2>Timesheets</h2>

@@ -21,7 +21,8 @@ export const TimesheetEdit = () => {
     fetch(`/timesheets/${params.id}`)
       .then((response) => response.json())
       .then(data => setTimesheet(data));
-  }, []);
+      // eslint-disable-next-line
+       }, []);
 
   return (
     <div>
