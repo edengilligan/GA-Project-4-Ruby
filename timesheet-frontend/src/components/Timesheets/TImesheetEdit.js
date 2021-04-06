@@ -18,79 +18,94 @@ export const TimesheetEdit = () => {
   const params = useParams();
   console.log('params: ', params);
   useEffect(() => {
-    fetch(`/timesheets/${params.id}`)
+    fetch(`/api/timesheets/${params.id}`)
       .then((response) => response.json())
       .then(data => setTimesheet(data));
       // eslint-disable-next-line
        }, []);
 
   return (
-    <div>
+    <div className= "editform">
       <h3>Edit/Delete</h3>
       <form>
+      <div> 
         <label>
           Date
-          <input value={timesheet.date} />
+          <div> <input value={timesheet.date} type="text"/></div> 
         </label>
+        </div>
 
+
+        <div>
         <label>
           Staff Attendance
-          <input value={timesheet.staff_attendance} />
+         <div> <input value={timesheet.staff_attendance} type="text"/> </div>
         </label>
-
+        </div>
+        <div>
         <label>
           Client
-          <input value={timesheet.client} />
+        <div>  <input value={timesheet.client} type="text"/> </div>
         </label>
+        </div>
 
+        <div>
         <label>
           Travel Information
-          <input value={timesheet.travel_information} />
+         <div>  <input value={timesheet.travel_information} type="text"/> </div>
         </label>
-
+        </div>
+        <div>
         <label>
           Arrival Time
-          <input value={timesheet.arrival_time} />
+         <div>  <input value={timesheet.arrival_time} type="text"/> </div>
         </label>
-
+        </div>
+        <div>
         <label>
           Departure Time
-          <input value={timesheet.departure_time} />
+        <div>  <input value={timesheet.departure_time} type="text"/> </div>
         </label>
+        </div>
 
+        <div> 
         <label>
           Products Used
-          <input value={timesheet.products_used} />
+        <div>   <input value={timesheet.products_used} type="text"/> </div>
         </label>
-
+        </div>
+        <div>
         <label>
           Receipts 
-          <input value={timesheet.receipts} />
+        <div>  <input value={timesheet.receipts} type="text" /> </div> 
         </label>
-
+        </div>
+        <div>
         <label>
           Notes
-          <input value={timesheet.notes} />
+         <div>  <input value={timesheet.notes} type="text" /> </div>
         </label>
-
+        </div>
+        <div>
         <label>
           Action Next Visit
-          <input value={timesheet.action_next_visit} />
+        <div>   <input value={timesheet.action_next_visit} type="text" /> </div>
         </label>
-
+        </div>
         <label>
           Timesheet Written By
-          <input value={timesheet.written_by} />
+       <div>   <input value={timesheet.written_by} type="text" /> </div>
         </label>
 
+<div>
         <button>
             Edit
         </button>
-
+        
         <button>
             Delete
         </button>
-
+        </div>
       </form>
     </div>
   );
