@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, { useEffect, useState } from "react";
 
-export const TimesheetEdit = () => {
-  const [timesheet, setTimesheet] = useState({
+const TimeFormEdit = (props) => {
+  console.log(props);
+
+  const [formState, setFormState] = useState({
     date: "",
     staff_attendance: "",
     client: "",
@@ -15,100 +16,166 @@ export const TimesheetEdit = () => {
     action_next_visit: "",
     written_by: "",
   });
-  const params = useParams();
-  console.log('params: ', params);
+
   useEffect(() => {
-    fetch(`/api/timesheets/${params.id}`)
-      .then((response) => response.json())
-      .then(data => setTimesheet(data));
-      // eslint-disable-next-line
-       }, []);
+    setFormState(props.timesheet);
+    console.log("useEffect edit");
+  }, [props.timesheet]);
+
+  const handleChange = (e) => {
+    const newState = { ...formState };
+    newState[e.target.name] = e.target.value;
+    setFormState(newState);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("handleSubmit");
+    props.submit(formState);
+  };
+
+  const handleDelete = () => {
+    // e.preventDefault();
+    props.onDelete(formState._id);
+    fetch(`/api/timesheets/${formState._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((timesheetData) => {
+        console.log("timesheetData:", timesheetData);
+     
+      });
+  };
 
   return (
-    <div className= "editform">
+    <div className="editform">
       <h3>Edit/Delete</h3>
-      <form>
-      <div> 
+      <form onSubmit={handleSubmit}>
+      
+      <div>
         <label>
-          Date
-          <div> <input value={timesheet.date} type="text"/></div> 
+        <div className="datetxt">Date</div> 
+          <input
+            name="date"
+            value={formState.date}
+            onChange={handleChange}
+          ></input>
+        </label>
+        </div>
+
+        <div>
+        <label>
+        <div className="stafftxt">Staff Attendance</div> 
+          <input
+            name="staff"
+            value={formState.staff_attendance}
+            onChange={handleChange}
+          ></input>
         </label>
         </div>
 
 
         <div>
         <label>
-          Staff Attendance
-         <div> <input value={timesheet.staff_attendance} type="text"/> </div>
+        <div className="traveltxt">Travel Information</div> 
+          <input
+            name="travel"
+            value={formState.travel_information}
+            onChange={handleChange}
+          ></input>
         </label>
         </div>
+
         <div>
         <label>
-          Client
-        <div>  <input value={timesheet.client} type="text"/> </div>
+        <div className="arrivaltxt">Arrival Time</div> 
+          <input
+            name="arrival"
+            value={formState.arrival_time}
+            onChange={handleChange}
+          ></input>
         </label>
         </div>
 
         <div>
         <label>
-          Travel Information
-         <div>  <input value={timesheet.travel_information} type="text"/> </div>
-        </label>
-        </div>
-        <div>
-        <label>
-          Arrival Time
-         <div>  <input value={timesheet.arrival_time} type="text"/> </div>
-        </label>
-        </div>
-        <div>
-        <label>
-          Departure Time
-        <div>  <input value={timesheet.departure_time} type="text"/> </div>
+        <div className="departuretxt">Departure Time</div> 
+          <input
+            name="departure"
+            value={formState.departure_time}
+            onChange={handleChange}
+          ></input>
         </label>
         </div>
 
-        <div> 
-        <label>
-          Products Used
-        <div>   <input value={timesheet.products_used} type="text"/> </div>
-        </label>
-        </div>
         <div>
         <label>
-          Receipts 
-        <div>  <input value={timesheet.receipts} type="text" /> </div> 
+        <div className="productstxt">Products Used</div> 
+          <input
+            name="arrival"
+            value={formState.products_used}
+            onChange={handleChange}
+          ></input>
         </label>
         </div>
-        <div>
-        <label>
-          Notes
-         <div>  <input value={timesheet.notes} type="text" /> </div>
-        </label>
-        </div>
-        <div>
-        <label>
-          Action Next Visit
-        <div>   <input value={timesheet.action_next_visit} type="text" /> </div>
-        </label>
-        </div>
-        <label>
-          Timesheet Written By
-       <div>   <input value={timesheet.written_by} type="text" /> </div>
-        </label>
 
-<div>
-        <button>
-            Edit
-        </button>
-        
-        <button>
-            Delete
-        </button>
+        <div>
+        <label>
+        <div className="receiptstxt">Receipts</div> 
+          <input
+            name="receipts"
+            value={formState.receipts}
+            onChange={handleChange}
+          ></input>
+        </label>
+        </div>
+
+        <div>
+        <label>
+        <div className="notestxt">Notes</div> 
+          <input
+            name="notes"
+            value={formState.notes}
+            onChange={handleChange}
+          ></input>
+        </label>
+        </div>
+
+        <div>
+        <label>
+        <div className="actiontxt">Action Next Visit</div> 
+          <input
+            name="action"
+            value={formState.action_next_visit}
+            onChange={handleChange}
+          ></input>
+        </label>
+        </div>
+
+       <div>
+        <label>
+        <div className="writtentxt">Written By</div> 
+          <input
+            name="written"
+            value={formState.written_by}
+            onChange={handleChange}
+          ></input>
+        </label>
+        </div>
+
+        <div>
+          <button type="submit">Edit</button>
+
+          <button onClick={handleDelete} >Delete</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default TimesheetEdit;
+export default TimeFormEdit; 
